@@ -1,0 +1,23 @@
+@startwbs
+!theme materia
+*[#yellow] Active Directory Lab
+**[#SkyBlue] Machine-A
+***[#pink] Type : \n Active Directory \n Domain Controller
+**** IP Address : 10.0.0.9
+**** Domain Name : auror.local
+**** CPU : 1
+**** Memory : 2048 MB
+*** Create user (Alice) and add user \n to the Remote Desktop Users group.
+*** Configure Active Directory \n and Domain Services
+*** Create a domain "auror.local"
+**[#SkyBlue] Machine-B
+***[#pink] Type : \n Windows10 Desktop \n joined to domain
+**** IP Address : 10.0.0.19
+**** Domain Name : auror.local
+**** CPU : 1
+**** Memory : 2048 MB
+*** Disable Windows firewall \n and Windows Defender
+*** Assign IP address of 'machine-A' \n as the DNS server
+*** Configure the domain name \n in Windows properties
+*** Assign "Alice" as the local administrator
+@endwbs

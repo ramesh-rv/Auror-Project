@@ -1,0 +1,44 @@
+# encoding: utf-8
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+	config.vagrant.plugins = ["vagrant-reload"]
+	config.vm.define "Machine-A" do |dc|
+		dc.vm.provider "virtualbox" do |vbox|
+			vbox.memory = 2048
+			vbox.cpus = 1
+			vbox.name = "Auror - Machine A"
+			vbox.gui = true
+		end
+    dc.vm.box = "gusztavvargadr/windows-server"
+    dc.vm.box_version = "1809.0.2205"
+		dc.winrm.transport = :plaintext
+		dc.winrm.basic_auth_only = true
+		dc.vm.hostname = "aurordc"
+		dc.vm.network "private_network", ip: "10.0.0.9"
+		dc.vm.provision "shell", path: "./scripts/setup_dc.ps1"
+		dc.vm.provision "reload"
+		dc.vm.boot_timeout = 6000
+	end
+
+
+	config.vm.define "Machine-B" do |user1|
+		user1.vm.provider "virtualbox" do |vbox|
+			vbox.memory = 2048
+			vbox.cpus = 1
+			vbox.name = "Auror - Machine B"
+			vbox.gui = true
+		end
+		user1.vm.box = "gusztavvargadr/windows-10"
+		user1.vm.box_version = "2102.0.2204"
+		user1.winrm.transport = :plaintext
+		user1.winrm.basic_auth_only = true
+		user1.vm.hostname = "UserMachine"
+		user1.vm.network "private_network", ip: "10.0.0.19"
+		user1.vm.provision "shell", path: "./scripts/join_desktop.ps1"
+		user1.vm.provision "reload"
+		user1.vm.boot_timeout = 6000
+	end
+end
+
