@@ -1,0 +1,28 @@
+@startuml
+!theme sketchy-outline
+object "KDC Service Account" as KRBTGT{
+name = "krbtgt"
+sid = "S-1-5-21-<Domain>-502"
+
+}
+
+object "PRIVILEGED ATTRIBUTE CERTIFICATE (PAC)" as PAC  {
+Group-1 SID
+Group-2 SID
+Group-2 SID
+Group-n SID
+}
+
+map "TICKET GRANTING TICKET" as TGT {
+    Security identifier (SID) =>
+    TGS ID =>
+    Timestamp =>
+    User's IP address =>
+    TGT lifetime =>
+    Session key =>
+    PAC =>
+}
+TGT::PAC--> PAC
+KRBTGT -> TGT
+note on link : TGT is encrypted and signed by krbtgt account
+@enduml

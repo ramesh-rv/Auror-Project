@@ -1,0 +1,36 @@
+@startuml
+!theme materia
+skinparam roundcorner 10
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+participant "File Server" as FS order 50
+box "Key Distribution Center (KDC)"
+participant "Ticket Granting Service(TGS)" as TGS order 40
+participant "Kerberos Database" as DC order 30
+participant "Authentication Service"  as AS order 20
+end box
+participant "User" order 10
+autonumber
+activate User #LightYellow
+User -> AS : User sends authentication request
+activate AS #Yellow
+AS -> DC : Validate user credentials
+activate DC  #YellowGreen
+DC --> AS : User credentials validated
+deactivate DC
+AS --> User : Issue TGT
+deactivate AS
+User -> TGS : User sends request to TGS
+activate TGS #Yellow
+TGS -> DC : Request to validate TGT
+activate DC #YellowGreen
+DC --> TGS : TGT validated
+deactivate DC
+TGS --> User : Issues Service Ticket
+deactivate TGS
+User -> FS : Request access to files presenting Service Ticket
+activate FS #Turquoise
+FS --> User : Allow access to file
+deactivate FS
+deactivate User
+@enduml
